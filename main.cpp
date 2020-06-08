@@ -300,7 +300,11 @@ void analizarProbabilidades(vectorNumeros *numeros, resultadosDeAnalisis resulta
         if (ldd != 0)
             lineas.push_back(ldd);
 
-        menor = lineas.at(0);
+        if (lineas.size() != 0)
+            menor = lineas.at(0);
+        else
+            menor = 0;
+
         for (int i = 1; i < lineas.size(); i++)
         {
             if (menor > lineas.at(i))
@@ -331,7 +335,7 @@ void imprimirResultados(vectorNumeros numeros)
 }
 int main()
 {
-    estructuraDePuntos puntos = generarLineas(500);
+    estructuraDePuntos puntos = generarLineas(10);
     resultadosDeAnalisis resultados = realizarAnalisisCompleto(puntos, 0.6);
     vectorNumeros numeros = cargarEstructuraNumeros();
     analizarProbabilidades(&numeros, resultados);
