@@ -330,12 +330,20 @@ void imprimirResultados(vectorNumeros numeros)
 
     for (int i = 0; i < numeros.size(); i++)
     {
-        numeros.at(i).print();
+        int numeroRandom = generarRandom(0,100);
+        float numeroRandomFloat = numeroRandom / 100.0;
+        cout << "Numero " << numeros.at(i).getNumero();
+        if(numeroRandom > numeros.at(i).getProbabilidad()) {
+            cout << " no aparece" << endl;
+        }
+        else{
+            cout << " aparece" << endl;
+        }
     }
 }
 int main()
 {
-    estructuraDePuntos puntos = generarLineas(10);
+    estructuraDePuntos puntos = generarLineas(100);
     resultadosDeAnalisis resultados = realizarAnalisisCompleto(puntos, 0.6);
     vectorNumeros numeros = cargarEstructuraNumeros();
     analizarProbabilidades(&numeros, resultados);
