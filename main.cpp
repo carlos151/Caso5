@@ -321,8 +321,6 @@ void analizarProbabilidades(vectorNumeros *numeros, resultadosDeAnalisis resulta
         float result = (float)((numeros->at(i).getCantidadApariciones() * 100) / total);
         numeros->at(i).setProbabilidad(result);
     }
-
-    cout << "Total: " << total << endl;
 }
 
 void imprimirResultados(vectorNumeros numeros)
@@ -330,14 +328,16 @@ void imprimirResultados(vectorNumeros numeros)
 
     for (int i = 0; i < numeros.size(); i++)
     {
-        int numeroRandom = generarRandom(0,100);
+        int numeroRandom = generarRandom(0, 100);
         float numeroRandomFloat = numeroRandom / 100.0;
-        cout << "Numero " << numeros.at(i).getNumero();
-        if(numeroRandom > numeros.at(i).getProbabilidad()) {
-            cout << " no aparece" << endl;
+        cout << "Numero " << numeros.at(i).getNumero() << " |   Probabilidad: " << numeros.at(i).getProbabilidad() << "%  |  Status: ";
+        if (numeroRandom > numeros.at(i).getProbabilidad())
+        {
+            cout << " No Aparece" << endl;
         }
-        else{
-            cout << " aparece" << endl;
+        else
+        {
+            cout << " Aparece" << endl;
         }
     }
 }
@@ -355,3 +355,38 @@ int main()
     cout << "Diagonales decrecientes: " << resultados.diagonalesDecrecientes << endl;
     cout << "Lineas totales: " << resultados.cantidadTotal << endl;
 }
+
+/*
+    Descripción General del Algoritmo
+
+    Como base estudiamos el comportamiento de las lineas generadas aleatoriamente, clasificandolas en lineas: 
+        ■ Crecientes
+        ■ Decrecientes
+        ■ Diagonales Crecientes
+        ■ Diagonales Decrecientes
+    Una vez estas lineas fueron procesadas, obtenemos una distribución del comportamiento de las mismas. Posteriormente, procedemmos a analizar y cargar la estructura de los números de un dígito. Los cuales presentan la siguiente estructura:
+
+      UNO   DOS     TRES    CUATRO  CINCO   SEIS    SIETE   OCHO   NUEVE  CERO
+      --   ------   -----     - -   -----   -----  ------  ------  -----  -----
+     - -        -       -    -  -   -       -          -   -    -  -   -  -   -
+    -  -   ------   -----   -----   -----   -----     -    ------  -----  -   -
+       -   -            -       -       -   -   -    -     -    -      -  -   -
+       -   ------   -----       -   -----   -----   -      ------      -  -----    
+    
+     Posteriormente, analizamos las maximas posibles apariciones de los numeros según su patron (cantiada de lineas de cada tipo que ocupen para formarse *ejemplo. el "4" ocupa 1 vertical, 1 horizontal y 1 diagonal creciente) y la distribución obtenida por el analisis de las lineas realizado previamente, de ahí obtenemos la probabilidad de formación que posee cada número. Finalmente se procede a realizar un random que permite dar respuesta de cuales de los números estan presentes según la probabilidad que tiene cada uno de ellos.   
+
+    
+
+    Explicación Detallada
+
+    → Se generan las lineas aleatoriamente: Como parametros recibimos un int de cantidad de lineas que se van a generar.
+    → Se analiza el N deseado: Realizamos un analisis de un porcentaje (se envia por parametros para tener la opción de reducir el tamaño N del problema) de lineas que se seleccionan aleatoriamente del arreglo.
+    → Se procede a tener un analisis más acertado: ejecutamos el analisis previo en reiteradas ocaciones para usar un promedio de los resultados y obtener una mejor respuesta para continuar con el ejercicio.
+    → Cargamos en la estructura el patrón de los Números de un Dígito
+    → Analizamos las probabilidades: 
+        * Recibe por parametros el arreglo de los numeros y el resultado del analisis de las lineas.
+        * Se realiza el calculo (dividimos la cantidad total de lineas entre lo que ocupa el patron del numero según el tipo de linea) para determinar cuantas máximas posibles formaciones puede tener cada numero según su patron y la cantidad de lineas que arroje el resultado del analisis de las lineas.
+        * Despues de analizar a todos los numeros se actualizan las probabilidades que tiene cada numero segun su cantidad maxima de apariciones
+    → Se evalua con un random para determinar si el numero se forma o no tomando en cuenta su probabilidad.
+    → Se imprimen los resultados.
+*/
